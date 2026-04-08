@@ -18,7 +18,7 @@ def low_stock_alerts(company_id):
     cutoff = datetime.now() - timedelta(days=30)
 
     # sales per product (recent)
-    sales_subq = (
+    sales_query = (
         db.session.query(
             OrderItems.product_id,
             func.sum(OrderItems.quantity).label("total_sold")
