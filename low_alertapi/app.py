@@ -41,14 +41,14 @@ def low_stock_alerts(company_id):
             Supplier.id,
             Supplier.name,
             Supplier.email,
-            sales_subq.c.total_sold
+            sales_query.c.total_sold
         )
         .join(Inventory, Inventory.product_id == Product.id)
         .join(Warehouse, Warehouse.id == Inventory.warehouse_id)
         .join(Supplier, Supplier.id == Product.supplier_id)
         .join(
-            sales_subq,
-            sales_subq.c.product_id == Product.id
+            sales_query,
+            sales_query.c.product_id == Product.id
         )
         .filter(Warehouse.company_id == company_id)
         .filter(Inventory.current_stock <= Inventory.threshold)
